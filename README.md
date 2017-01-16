@@ -1,8 +1,8 @@
-# stripe-php
-The Most Well Documented PHP Library For Stripe's API
+# friendbuy-php
+The Most Well Documented PHP Library For FriendBuy's API
 
 ## Installation
 
 ```
-composer require jamesvweston/stripe-php
+composer require jamesvweston/friendbuy-php
 ```
