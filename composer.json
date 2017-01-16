@@ -1,0 +1,38 @@
+{
+  "name": "jamesvweston/friendbuy-php",
+  "description": "A simple PHP wrapper for the FriendBuy.com API",
+  "keywords": [
+    "php",
+    "friendbuy",
+    "api",
+    "friend-buy",
+    "friendbuy-php"
+  ],
+  "license": "MIT",
+  "type": "library",
+  "homepage": "https://github.com/jamesvweston/friendbuy-php",
+  "authors":[
+    {
+      "name": "James Weston",
+      "email": "jamesvweston@users.noreply.github.com"
+    }
+  ],
+  "require": {
+    "guzzlehttp/guzzle": "^6.2",
+    "jamesvweston/php-utilities": "dev-master",
+    "vlucas/phpdotenv": "^2.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "jamesvweston\\FriendBuy\\": "src"
+    }
+  },
+  "config": {
+    "preferred-install": "dist"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable" : true
+}
