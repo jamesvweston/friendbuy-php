@@ -53,9 +53,14 @@ class Reward implements \JsonSerializable
     protected $status;
 
     /**
-     * @var Fraud
+     * @var Fraud|null
      */
     protected $rejected_reasons;
+
+    /**
+     * @var Conversion
+     */
+    protected $conversion;
 
 
     /**
@@ -69,7 +74,12 @@ class Reward implements \JsonSerializable
         $this->evaluate_at              = AU::get($data['evaluate_at']);
         $this->type                     = AU::get($data['type']);
         $this->status                   = AU::get($data['status'], []);
-        $this->rejected_reasons         = new Fraud(AU::get($data['rejected_reasons']));
+
+        $this->rejected_reasons         = AU::get($data['rejected_reasons']);
+        if (!is_null($this->rejected_reasons))
+            $this->rejected_reasons     = new Fraud($this->rejected_reasons);
+
+        $this->conversion               = AU::get($data['conversion']);
     }
 
     /**
@@ -78,8 +88,8 @@ class Reward implements \JsonSerializable
     public function jsonSerialize()
     {
         $object                         = $this->simpleSerialize();
-        $object['rejected_reasons']     = $this->rejected_reasons->jsonSerialize();
-
+        $object['rejected_reasons']     = is_null($this->rejected_reasons) ? null : $this->rejected_reasons->jsonSerialize();
+        $object['conversion']           = $this->conversion->jsonSerialize();
         return $object;
     }
 
@@ -92,27 +102,11 @@ class Reward implements \JsonSerializable
     }
 
     /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
      * @return float
      */
     public function getAmount()
     {
         return $this->amount;
-    }
-
-    /**
-     * @param float $amount
-     */
-    public function setAmount($amount)
-    {
-        $this->amount = $amount;
     }
 
     /**
@@ -124,27 +118,11 @@ class Reward implements \JsonSerializable
     }
 
     /**
-     * @param string $created_at
-     */
-    public function setCreatedAt($created_at)
-    {
-        $this->created_at = $created_at;
-    }
-
-    /**
      * @return string
      */
     public function getEvaluateAt()
     {
         return $this->evaluate_at;
-    }
-
-    /**
-     * @param string $evaluate_at
-     */
-    public function setEvaluateAt($evaluate_at)
-    {
-        $this->evaluate_at = $evaluate_at;
     }
 
     /**
@@ -156,14 +134,6 @@ class Reward implements \JsonSerializable
     }
 
     /**
-     * @param string $type
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-    }
-
-    /**
      * @return string
      */
     public function getStatus()
@@ -172,15 +142,7 @@ class Reward implements \JsonSerializable
     }
 
     /**
-     * @param string $status
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-    }
-
-    /**
-     * @return Fraud
+     * @return Fraud|null
      */
     public function getRejectedReasons()
     {
@@ -188,11 +150,11 @@ class Reward implements \JsonSerializable
     }
 
     /**
-     * @param Fraud $rejected_reasons
+     * @return Conversion
      */
-    public function setRejectedReasons($rejected_reasons)
+    public function getConversion()
     {
-        $this->rejected_reasons = $rejected_reasons;
+        return $this->conversion;
     }
 
 }
