@@ -14,7 +14,7 @@ class Sharer implements \JsonSerializable
 
 
     /**
-     * @var Customer
+     * @var Customer|null
      */
     protected $customer;
 
@@ -42,7 +42,10 @@ class Sharer implements \JsonSerializable
      */
     public function __construct($data = [])
     {
-        $this->customer                 = new Customer(AU::get($data['customer']));
+        $this->customer                 = AU::get($data['customer']);
+        if (!is_null($this->customer))
+            $this->customer             = new Customer($this->customer);
+
         $this->facebook_friends_count   = AU::get($data['facebook_friends_count']);
         $this->twitter_followers_count  = AU::get($data['twitter_followers_count']);
         $this->twitter_followers_count  = AU::get($data['twitter_followers_count']);
@@ -56,13 +59,13 @@ class Sharer implements \JsonSerializable
     public function jsonSerialize()
     {
         $object                         = $this->simpleSerialize();
-        $object['customer']             = $this->customer->jsonSerialize();
+        $object['customer']             = is_null($this->customer) ? null : $this->customer->jsonSerialize();
 
         return $object;
     }
 
     /**
-     * @return Customer
+     * @return Customer|null
      */
     public function getCustomer()
     {
@@ -70,7 +73,7 @@ class Sharer implements \JsonSerializable
     }
 
     /**
-     * @param Customer $customer
+     * @param Customer|null $customer
      */
     public function setCustomer($customer)
     {
