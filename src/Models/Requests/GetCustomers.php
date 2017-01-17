@@ -28,6 +28,11 @@ class GetCustomers implements \JsonSerializable
     /**
      * @var int|null
      */
+    protected $limit;
+
+    /**
+     * @var int|null
+     */
     protected $offset;
 
     /**
@@ -86,6 +91,22 @@ class GetCustomers implements \JsonSerializable
     public function setAccountId($account_id)
     {
         $this->account_id = $account_id;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getLimit()
+    {
+        return $this->limit;
+    }
+
+    /**
+     * @param int|null $limit
+     */
+    public function setLimit($limit)
+    {
+        $this->limit = $limit;
     }
 
     /**
