@@ -5,6 +5,7 @@ namespace jamesvweston\FriendBuy\Api;
 
 use jamesvweston\FriendBuy\Models\Requests\GetShares;
 use jamesvweston\FriendBuy\Models\Responses\PaginatedResponses\PaginatedShares;
+use jamesvweston\FriendBuy\Models\Responses\Share;
 
 class ShareApi extends BaseApi
 {
@@ -23,4 +24,15 @@ class ShareApi extends BaseApi
         $response                       = parent::makeHttpRequest('get', $this->path, $request);
         return $this->config->isJsonOnly() ? $response : new PaginatedShares($response);
     }
+
+    /**
+     * @param   int         $id
+     * @return  Share|array
+     */
+    public function show ($id)
+    {
+        $response                       = parent::makeHttpRequest('get', $this->path . '/' . $id);
+        return $this->config->isJsonOnly() ? $response : new Share($response);
+    }
+
 }

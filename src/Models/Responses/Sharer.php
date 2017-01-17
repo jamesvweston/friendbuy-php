@@ -18,13 +18,36 @@ class Sharer implements \JsonSerializable
      */
     protected $customer;
 
+    /**
+     * @var int
+     */
+    protected $facebook_friends_count;
 
+    /**
+     * @var int
+     */
+    protected $twitter_followers_count;
+
+    /**
+     * @var string
+     */
+    protected $name;
+
+    /**
+     * @var string
+     */
+    protected $email;
     /**
      * @param array $data
      */
     public function __construct($data = [])
     {
         $this->customer                 = new Customer(AU::get($data['customer']));
+        $this->facebook_friends_count   = AU::get($data['facebook_friends_count']);
+        $this->twitter_followers_count  = AU::get($data['twitter_followers_count']);
+        $this->twitter_followers_count  = AU::get($data['twitter_followers_count']);
+        $this->name                     = AU::get($data['name']);
+        $this->email                    = AU::get($data['email']);
     }
 
     /**
@@ -52,5 +75,69 @@ class Sharer implements \JsonSerializable
     public function setCustomer($customer)
     {
         $this->customer = $customer;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFacebookFriendsCount()
+    {
+        return $this->facebook_friends_count;
+    }
+
+    /**
+     * @param int $facebook_friends_count
+     */
+    public function setFacebookFriendsCount($facebook_friends_count)
+    {
+        $this->facebook_friends_count = $facebook_friends_count;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTwitterFollowersCount()
+    {
+        return $this->twitter_followers_count;
+    }
+
+    /**
+     * @param int $twitter_followers_count
+     */
+    public function setTwitterFollowersCount($twitter_followers_count)
+    {
+        $this->twitter_followers_count = $twitter_followers_count;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
     }
 }

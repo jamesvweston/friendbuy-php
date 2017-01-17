@@ -56,7 +56,6 @@ class PaginatedCustomers extends PaginatedResponse implements \JsonSerializable
         foreach ($results AS $item)
         {
             $this->results[]            = new Customer($item);
-            print_r($this->results);die;
         }
     }
 
