@@ -95,7 +95,7 @@ class Share implements \JsonSerializable
         $this->twitter_followers_count  = AU::get($data['twitter_followers_count']);
         $this->message                  = new Message(AU::get($data['message']));
         $this->campaign                 = new Campaign(AU::get($data['campaign']));
-        $this->email_recipients         = AU::get($data['email_recipients']);
+        $this->email_recipients         = AU::get($data['email_recipients'], []);
         $this->sharer                   = new Sharer(AU::get($data['sharer']));
     }
 
