@@ -21,6 +21,11 @@ class FriendBuyConfiguration
     /**
      * @var string
      */
+    protected $secret;
+
+    /**
+     * @var string
+     */
     protected $version;
 
     /**
@@ -37,9 +42,23 @@ class FriendBuyConfiguration
     {
         $this->username                 = AU::get($data['username']);
         $this->password                 = AU::get($data['password']);
+        $this->secret                   = AU::get($data['secret']);
         $this->version                  = AU::get($data['version'], 'v1');
 
         $this->setUrl();
+    }
+
+    /**
+     * Validates if FriendBuy is sending the WebHook
+     * @param   string  $input
+     * @param   string  $hMacHeader     Header X-FRIENDBUY-SIGNATURE
+     * @return  bool
+     */
+    public function authenticateWebHook ($input, $hMacHeader)
+    {
+        $calculated_hmac                = base64_encode(hash_hmac('sha256', $input, $this->secret, true));
+
+        return ($hMacHeader == $calculated_hmac);
     }
 
     /**
@@ -91,6 +110,22 @@ class FriendBuyConfiguration
     {
         $this->version = $version;
         $this->setUrl();
+    }
+
+    /**
+     * @return string
+     */
+    public function getSecret()
+    {
+        return $this->secret;
+    }
+
+    /**
+     * @param string $secret
+     */
+    public function setSecret($secret)
+    {
+        $this->secret = $secret;
     }
 
     /**
