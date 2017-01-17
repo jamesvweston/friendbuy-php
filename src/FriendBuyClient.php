@@ -71,7 +71,6 @@ class FriendBuyClient
             $data                       = [
                 'username'              => AU::get($config['username']),
                 'password'              => AU::get($config['password']),
-                'secret'                => AU::get($config['secret']),
             ];
             $this->config               = new FriendBuyConfiguration($data);
         }
@@ -86,7 +85,6 @@ class FriendBuyClient
             $data = [
                 'username'              => getenv('FRIEND_BUY_USERNAME'),
                 'password'              => getenv('FRIEND_BUY_PASSWORD'),
-                'secret'                => getenv('FRIEND_BUY_SECRET'),
             ];
             $this->config               = new FriendBuyConfiguration($data);
         }
