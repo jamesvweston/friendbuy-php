@@ -38,6 +38,11 @@ class Customer implements \JsonSerializable
      */
     protected $last_name;
 
+    /**
+     * @var int
+     */
+    protected $account_id;
+
 
     /**
      * @param array $data
@@ -46,6 +51,7 @@ class Customer implements \JsonSerializable
     {
         $this->id                       = AU::get($data['id']);
         $this->detail_uri               = AU::get($data['detail_uri']);
+        $this->account_id               = AU::get($data['account_id']);
         $this->email                    = AU::get($data['email']);
         $this->first_name               = AU::get($data['first_name']);
         $this->last_name                = AU::get($data['last_name']);
@@ -139,6 +145,22 @@ class Customer implements \JsonSerializable
     public function setLastName($last_name)
     {
         $this->last_name = $last_name;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAccountId()
+    {
+        return $this->account_id;
+    }
+
+    /**
+     * @param int $account_id
+     */
+    public function setAccountId($account_id)
+    {
+        $this->account_id = $account_id;
     }
 
 }
