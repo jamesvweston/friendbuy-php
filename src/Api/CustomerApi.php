@@ -3,6 +3,7 @@
 namespace jamesvweston\FriendBuy\Api;
 
 
+use jamesvweston\FriendBuy\Models\Requests\GetCustomers;
 use jamesvweston\FriendBuy\Models\Responses\Customer;
 use jamesvweston\FriendBuy\Models\Responses\PaginatedResponses\PaginatedConversions;
 use jamesvweston\FriendBuy\Models\Responses\PaginatedResponses\PaginatedCustomers;
@@ -19,11 +20,12 @@ class CustomerApi extends BaseApi
 
 
     /**
-     * @param   array       $request
+     * @param   GetCustomers|array  $request
      * @return  PaginatedCustomers
      */
     public function index ($request = [])
     {
+        $request                        = ($request instanceof GetCustomers) ? $request->jsonSerialize() : $request;
         $response                       = parent::makeHttpRequest('get', $this->path, $request);
         return new PaginatedCustomers($response);
     }
