@@ -15,22 +15,22 @@ class OptOutApi extends BaseApi
 
     /**
      * @param   array       $request
-     * @return  PaginatedEmailOptOuts
+     * @return  PaginatedEmailOptOuts|array
      */
     public function index ($request = [])
     {
         $response                       = parent::makeHttpRequest('get', $this->path, $request);
-        return new PaginatedEmailOptOuts($response);
+        return $this->config->isJsonOnly() ? $response : new PaginatedEmailOptOuts($response);
     }
 
     /**
      * @param   array       $request
-     * @return  EmailOptOut
+     * @return  EmailOptOut|array
      */
     public function create ($request = [])
     {
         $response                       = parent::makeHttpRequest('post', $this->path, $request);
-        return new EmailOptOut($response);
+        return $this->config->isJsonOnly() ? $response : new EmailOptOut($response);
     }
 
 }

@@ -21,73 +21,73 @@ class CustomerApi extends BaseApi
 
     /**
      * @param   GetCustomers|array  $request
-     * @return  PaginatedCustomers
+     * @return  PaginatedCustomers|array
      */
     public function index ($request = [])
     {
         $request                        = ($request instanceof GetCustomers) ? $request->jsonSerialize() : $request;
         $response                       = parent::makeHttpRequest('get', $this->path, $request);
-        return new PaginatedCustomers($response);
+        return $this->config->isJsonOnly() ? $response : new PaginatedCustomers($response);
     }
 
     /**
      * @param   int         $id
-     * @return  Customer
+     * @return  Customer|array
      */
     public function show ($id)
     {
         $response                       = parent::makeHttpRequest('get', $this->path . '/' . $id);
-        return new Customer($response);
+        return $this->config->isJsonOnly() ? $response : new Customer($response);
     }
 
     /**
      * @param   int         $id
-     * @return  PaginatedConversions
+     * @return  PaginatedConversions|array
      */
     public function getConversions ($id)
     {
         $response                       = parent::makeHttpRequest('get', $this->path . '/' . $id . '/conversions');
-        return new PaginatedConversions($response);
+        return $this->config->isJsonOnly() ? $response : new PaginatedConversions($response);
     }
 
     /**
      * @param   int         $id
-     * @return  PaginatedEmailRecipients
+     * @return  PaginatedEmailRecipients|array
      */
     public function getEmailRecipients ($id)
     {
         $response                       = parent::makeHttpRequest('get', $this->path . '/' . $id . '/email-recipients');
-        return new PaginatedEmailRecipients($response);
+        return $this->config->isJsonOnly() ? $response : new PaginatedEmailRecipients($response);
     }
 
     /**
      * @param   int         $id
-     * @return  PaginatedReferralCodes
+     * @return  PaginatedReferralCodes|array
      */
     public function getReferralCodes ($id)
     {
         $response                       = parent::makeHttpRequest('get', $this->path . '/' . $id . '/referral_codes');
-        return new PaginatedReferralCodes($response);
+        return $this->config->isJsonOnly() ? $response : new PaginatedReferralCodes($response);
     }
 
     /**
      * @param   int         $id
-     * @return  PaginatedRewards
+     * @return  PaginatedRewards|array
      */
     public function getRewards ($id)
     {
         $response                       = parent::makeHttpRequest('get', $this->path . '/' . $id . '/rewards');
-        return new PaginatedRewards($response);
+        return $this->config->isJsonOnly() ? $response : new PaginatedRewards($response);
     }
 
     /**
      * @param   int         $id
-     * @return  PaginatedShares
+     * @return  PaginatedShares|array
      */
     public function getShares ($id)
     {
         $response                       = parent::makeHttpRequest('get', $this->path . '/' . $id . '/shares');
-        return new PaginatedShares($response);
+        return $this->config->isJsonOnly() ? $response : new PaginatedShares($response);
     }
 
 }

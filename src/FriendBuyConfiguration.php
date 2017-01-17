@@ -24,6 +24,11 @@ class FriendBuyConfiguration
     protected $version;
 
     /**
+     * @var bool
+     */
+    protected $jsonOnly;
+
+    /**
      * @var string
      */
     protected $url;
@@ -38,6 +43,7 @@ class FriendBuyConfiguration
         $this->username                 = AU::get($data['username']);
         $this->password                 = AU::get($data['password']);
         $this->version                  = AU::get($data['version'], 'v1');
+        $this->jsonOnly                 = AU::get($data['version'], false);
 
         $this->setUrl();
     }
@@ -104,6 +110,22 @@ class FriendBuyConfiguration
     {
         $this->version = $version;
         $this->setUrl();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isJsonOnly()
+    {
+        return $this->jsonOnly;
+    }
+
+    /**
+     * @param bool $jsonOnly
+     */
+    public function setJsonOnly($jsonOnly)
+    {
+        $this->jsonOnly = $jsonOnly;
     }
 
     /**

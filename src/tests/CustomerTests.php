@@ -13,6 +13,5 @@ class CustomerTests extends \PHPUnit_Framework_TestCase
     {
         $client                     = FriendBuyConfigFactory::getFromEnv();
         $results                    = $client->customerApi->index();
-
     }
 }

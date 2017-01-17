@@ -16,13 +16,13 @@ class PurchaseApi extends BaseApi
     /**
      * @see     https://www.friendbuy.com/rest-api-reference/#purchases
      * @param   CreatePurchase|array    $request
-     * @return  Purchase
+     * @return  Purchase|array
      */
     public function create ($request = [])
     {
         $request                        = ($request instanceof \JsonSerializable) ? $request->jsonSerialize() : $request;
         $response                       = parent::makeHttpRequest('post', $this->path, $request);
-        return new Purchase($response);
+        return $this->config->isJsonOnly() ? $response : new Purchase($response);
     }
 
 }

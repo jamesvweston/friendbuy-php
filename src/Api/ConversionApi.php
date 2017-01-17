@@ -15,22 +15,22 @@ class ConversionApi extends BaseApi
 
     /**
      * @param   array       $request
-     * @return  PaginatedConversions
+     * @return  PaginatedConversions|array
      */
     public function index ($request = [])
     {
         $response                       = parent::makeHttpRequest('get', $this->path, $request);
-        return new PaginatedConversions($response);
+        return $this->config->isJsonOnly() ? $response : new PaginatedConversions($response);
     }
 
     /**
      * @param   int         $id
-     * @return  Conversion
+     * @return  Conversion|array
      */
     public function show ($id)
     {
         $response                       = parent::makeHttpRequest('get', $this->path . '/' . $id);
-        return new Conversion($response);
+        return $this->config->isJsonOnly() ? $response : new Conversion($response);
     }
 
 }
