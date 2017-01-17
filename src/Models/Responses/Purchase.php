@@ -39,7 +39,7 @@ class Purchase implements \JsonSerializable
     protected $order_id;
 
     /**
-     * @var array
+     * @var Product[]
      */
     protected $products;
 
@@ -59,7 +59,12 @@ class Purchase implements \JsonSerializable
         $this->ip_address               = AU::get($data['ip_address']);
         $this->new_customer             = AU::get($data['new_customer']);
         $this->order_id                 = AU::get($data['order_id']);
-        $this->products                 = AU::get($data['products'], []);
+
+        $this->products                 = [];
+        $products                       = AU::get($data['products'], []);
+        foreach ($products AS $item)
+            $this->products[]           = new Product($item);
+
         $this->total                    = AU::get($data['total']);
     }
 
@@ -70,6 +75,9 @@ class Purchase implements \JsonSerializable
     {
         $object                         = $this->simpleSerialize();
 
+        $object['products']             = [];
+        foreach ($this->products AS $product)
+            $object['products'][]       = $product->jsonSerialize();
         return $object;
     }
 
@@ -154,7 +162,7 @@ class Purchase implements \JsonSerializable
     }
 
     /**
-     * @return array
+     * @return Product[]
      */
     public function getProducts()
     {
@@ -162,7 +170,7 @@ class Purchase implements \JsonSerializable
     }
 
     /**
-     * @param array $products
+     * @param Product[] $products
      */
     public function setProducts($products)
     {

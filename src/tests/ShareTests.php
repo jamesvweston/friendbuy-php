@@ -12,8 +12,6 @@ class ShareTests extends \PHPUnit_Framework_TestCase
     {
         $client                     = FriendBuyConfigFactory::getFromEnv();
         $results                    = $client->shareApi->index();
-        print_r($results->getResults()[0]);
-        die;
     }
 
 }

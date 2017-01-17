@@ -53,6 +53,11 @@ class Conversion implements \JsonSerializable
     protected $purchase;
 
     /**
+     * @var PersonalUrl
+     */
+    protected $personal_url;
+
+    /**
      * @var Reward[]
      */
     protected $rewards;
@@ -81,14 +86,12 @@ class Conversion implements \JsonSerializable
         $this->campaign                 = new Campaign(AU::get($data['campaign']));
         $this->fraud                    = new Fraud(AU::get($data['fraud']));
         $this->purchase                 = new Purchase(AU::get($data['purchase']));
+        $this->personal_url             = new PersonalUrl(AU::get($data['personal_url']));
 
         $this->rewards                  = [];
-        if (is_array(AU::isArrays($data['rewards'])))
-        {
-            $rewardsResponse            = AU::get($data['status']);
-            foreach ($rewardsResponse AS $reward)
-                $this->rewards[]        = new Reward($reward);
-        }
+        $rewards                        = AU::get($data['rewards'], []);
+        foreach ($rewards AS $item)
+            $this->rewards[]            = new Reward($item);
 
         $this->referrer                 = new Referrer(AU::get($data['referrer']));
         $this->share                    = new Share(AU::get($data['share']));
@@ -103,6 +106,7 @@ class Conversion implements \JsonSerializable
         $object['campaign']             = $this->campaign->jsonSerialize();
         $object['fraud']                = $this->fraud->jsonSerialize();
         $object['purchase']             = $this->purchase->jsonSerialize();
+        $object['personal_url']         = $this->personal_url->jsonSerialize();
 
         $object['rewards']              = [];
         foreach ($this->rewards AS $reward)
@@ -123,11 +127,27 @@ class Conversion implements \JsonSerializable
     }
 
     /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
      * @return string
      */
     public function getCreatedAt()
     {
         return $this->created_at;
+    }
+
+    /**
+     * @param string $created_at
+     */
+    public function setCreatedAt($created_at)
+    {
+        $this->created_at = $created_at;
     }
 
     /**
@@ -139,11 +159,27 @@ class Conversion implements \JsonSerializable
     }
 
     /**
+     * @param string $detail_uri
+     */
+    public function setDetailUri($detail_uri)
+    {
+        $this->detail_uri = $detail_uri;
+    }
+
+    /**
      * @return bool
      */
     public function isPossibleSelfReferral()
     {
         return $this->possible_self_referral;
+    }
+
+    /**
+     * @param bool $possible_self_referral
+     */
+    public function setPossibleSelfReferral($possible_self_referral)
+    {
+        $this->possible_self_referral = $possible_self_referral;
     }
 
     /**
@@ -155,11 +191,27 @@ class Conversion implements \JsonSerializable
     }
 
     /**
+     * @param string $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    /**
      * @return Campaign
      */
     public function getCampaign()
     {
         return $this->campaign;
+    }
+
+    /**
+     * @param Campaign $campaign
+     */
+    public function setCampaign($campaign)
+    {
+        $this->campaign = $campaign;
     }
 
     /**
@@ -171,11 +223,43 @@ class Conversion implements \JsonSerializable
     }
 
     /**
+     * @param Fraud $fraud
+     */
+    public function setFraud($fraud)
+    {
+        $this->fraud = $fraud;
+    }
+
+    /**
      * @return Purchase
      */
     public function getPurchase()
     {
         return $this->purchase;
+    }
+
+    /**
+     * @param Purchase $purchase
+     */
+    public function setPurchase($purchase)
+    {
+        $this->purchase = $purchase;
+    }
+
+    /**
+     * @return PersonalUrl
+     */
+    public function getPersonalUrl()
+    {
+        return $this->personal_url;
+    }
+
+    /**
+     * @param PersonalUrl $personal_url
+     */
+    public function setPersonalUrl($personal_url)
+    {
+        $this->personal_url = $personal_url;
     }
 
     /**
@@ -187,11 +271,27 @@ class Conversion implements \JsonSerializable
     }
 
     /**
+     * @param Reward[] $rewards
+     */
+    public function setRewards($rewards)
+    {
+        $this->rewards = $rewards;
+    }
+
+    /**
      * @return Referrer
      */
     public function getReferrer()
     {
         return $this->referrer;
+    }
+
+    /**
+     * @param Referrer $referrer
+     */
+    public function setReferrer($referrer)
+    {
+        $this->referrer = $referrer;
     }
 
     /**
@@ -201,4 +301,13 @@ class Conversion implements \JsonSerializable
     {
         return $this->share;
     }
+
+    /**
+     * @param Share $share
+     */
+    public function setShare($share)
+    {
+        $this->share = $share;
+    }
+
 }
