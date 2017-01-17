@@ -28,11 +28,6 @@ abstract class PaginatedResponse implements \JsonSerializable
      */
     protected $offset;
 
-    /**
-     * @var object[]
-     */
-    protected $results;
-
 
     /**
      * @param array $data
@@ -42,9 +37,6 @@ abstract class PaginatedResponse implements \JsonSerializable
         $this->this_page_results_count  = AU::get($data['this_page_results_count']);
         $this->total_results_count      = AU::get($data['total_results_count']);
         $this->offset                   = AU::get($data['offset']);
-
-        $this->results                  = [];
-        $this->results                  = $this->setResults(AU::get($data['results'], []));
     }
 
     /**
@@ -53,10 +45,6 @@ abstract class PaginatedResponse implements \JsonSerializable
     public function jsonSerialize()
     {
         $object                         = $this->simpleSerialize();
-        $object['results']              = [];
-
-        foreach ($this->results AS $result)
-            $object['results']          = $result->jsonSerialize();
 
         return $object;
     }
