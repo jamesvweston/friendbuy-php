@@ -22,6 +22,16 @@ class GetConversions implements \JsonSerializable
     protected $offset;
 
     /**
+     * @var string|null
+     */
+    protected $from_date;
+
+    /**
+     * @var string|null
+     */
+    protected $to_date;
+
+    /**
      * @return array
      */
     public function jsonSerialize()
@@ -61,6 +71,38 @@ class GetConversions implements \JsonSerializable
     public function setOffset($offset)
     {
         $this->offset = $offset;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getFromDate()
+    {
+        return $this->from_date;
+    }
+
+    /**
+     * @param null|string $from_date
+     */
+    public function setFromDate($from_date)
+    {
+        $this->from_date = $from_date;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getToDate()
+    {
+        return $this->to_date;
+    }
+
+    /**
+     * @param null|string $to_date
+     */
+    public function setToDate($to_date)
+    {
+        $this->to_date = $to_date;
     }
 
 }
