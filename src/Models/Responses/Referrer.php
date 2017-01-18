@@ -34,7 +34,7 @@ class Referrer implements \JsonSerializable
     protected $twitter_followers_count;
 
     /**
-     * @var Customer
+     * @var Customer|null
      */
     protected $customer;
 
@@ -48,7 +48,10 @@ class Referrer implements \JsonSerializable
         $this->facebook_friends_count   = AU::get($data['facebook_friends_count']);
         $this->name                     = AU::get($data['name']);
         $this->twitter_followers_count  = AU::get($data['twitter_followers_count']);
-        $this->customer                 = new Customer(AU::get($data['customer']));
+
+        $this->customer                 = AU::get($data['customer']);
+        if (!is_null($this->customer))
+            $this->customer             = new Customer($this->customer);
     }
 
     /**
@@ -57,7 +60,7 @@ class Referrer implements \JsonSerializable
     public function jsonSerialize()
     {
         $object                         = $this->simpleSerialize();
-        $object['customer']             = $this->customer->jsonSerialize();
+        $object['customer']             = is_null($this->customer) ? null : $this->customer->jsonSerialize();
 
         return $object;
     }
@@ -95,7 +98,7 @@ class Referrer implements \JsonSerializable
     }
 
     /**
-     * @return Customer
+     * @return Customer|null
      */
     public function getCustomer()
     {
