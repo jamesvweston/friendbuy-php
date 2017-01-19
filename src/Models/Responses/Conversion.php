@@ -68,7 +68,7 @@ class Conversion implements \JsonSerializable
     protected $referrer;
 
     /**
-     * @var Share
+     * @var Share|null
      */
     protected $share;
 
@@ -94,7 +94,10 @@ class Conversion implements \JsonSerializable
             $this->rewards[]            = new Reward($item);
 
         $this->referrer                 = new Referrer(AU::get($data['referrer']));
-        $this->share                    = new Share(AU::get($data['share']));
+
+        $this->share                    = AU::get($data['share']);
+        if (!is_null($this->share))
+            $this->share                = new Share($this->share);
     }
 
     /**
@@ -113,7 +116,7 @@ class Conversion implements \JsonSerializable
             $object['rewards'][]        = $reward->jsonSerialize();
 
         $object['referrer']             = $this->referrer->jsonSerialize();
-        $object['share']                = $this->share->jsonSerialize();
+        $object['share']                = is_null($this->share) ? null : $this->share->jsonSerialize();
 
         return $object;
     }
@@ -295,7 +298,7 @@ class Conversion implements \JsonSerializable
     }
 
     /**
-     * @return Share
+     * @return Share|null
      */
     public function getShare()
     {
@@ -303,7 +306,7 @@ class Conversion implements \JsonSerializable
     }
 
     /**
-     * @param Share $share
+     * @param Share|null $share
      */
     public function setShare($share)
     {
