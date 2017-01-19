@@ -80,6 +80,8 @@ class Reward implements \JsonSerializable
             $this->rejected_reasons     = new Fraud($this->rejected_reasons);
 
         $this->conversion               = AU::get($data['conversion']);
+        if (!is_null($this->conversion))
+            $this->conversion           = new Conversion($this->conversion);
     }
 
     /**
@@ -89,7 +91,7 @@ class Reward implements \JsonSerializable
     {
         $object                         = $this->simpleSerialize();
         $object['rejected_reasons']     = is_null($this->rejected_reasons) ? null : $this->rejected_reasons->jsonSerialize();
-        $object['conversion']           = $this->conversion->jsonSerialize();
+        $object['conversion']           = is_null($this->conversion) ? null : $this->conversion->jsonSerialize();
         return $object;
     }
 

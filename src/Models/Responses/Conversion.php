@@ -278,7 +278,6 @@ class Conversion implements \JsonSerializable
      */
     public function setRewards($rewards)
     {
-        $this->rewards = null;
         $this->rewards = $rewards;
     }
 
