@@ -14,6 +14,11 @@ class Purchase implements \JsonSerializable
 
 
     /**
+     * @var Customer|null
+     */
+    protected $customer;
+
+    /**
      * @var string
      */
     protected $date;
@@ -54,6 +59,10 @@ class Purchase implements \JsonSerializable
      */
     public function __construct($data = [])
     {
+        $this->customer                 = AU::get($data['customer']);
+        if (!is_null($this->customer))
+            $this->customer             = new Customer($this->customer);
+
         $this->date                     = AU::get($data['date']);
         $this->email                    = AU::get($data['email']);
         $this->ip_address               = AU::get($data['ip_address']);
@@ -75,10 +84,28 @@ class Purchase implements \JsonSerializable
     {
         $object                         = $this->simpleSerialize();
 
+        $object['customer']             = is_null($this->customer) ? null : $this->customer->jsonSerialize();
+
         $object['products']             = [];
         foreach ($this->products AS $product)
             $object['products'][]       = $product->jsonSerialize();
         return $object;
+    }
+
+    /**
+     * @return Customer|null
+     */
+    public function getCustomer()
+    {
+        return $this->customer;
+    }
+
+    /**
+     * @param Customer|null $customer
+     */
+    public function setCustomer($customer)
+    {
+        $this->customer = $customer;
     }
 
     /**
